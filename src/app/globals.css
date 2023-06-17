@@ -1,27 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Signika:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+@layer components {
+    /* =============
+    -- BUTTON --
+    ============= */
+    .btn {
+        @apply rounded-lg px-6 py-2 font-semibold active:animate-zoom-in-out;
+    }
+
+    .btn--naked {
+        @apply border-none bg-transparent hover:bg-neutral-600/75;
+    }
+
+    .btn--primary {
+        @apply bg-primary-600 hover:bg-primary-500;
+    }
+
+    .btn--secondary {
+        @apply bg-secondary-600 text-neutral-950 hover:bg-secondary-500;
+    }
+
+    .btn--outlined {
+        @apply border-2;
+    }
+
+    .btn--outlined-primary {
+        @apply border-primary-500 hover:bg-primary-500/25;
+    }
+
+    .btn--outlined-secondary {
+        @apply border-secondary-500 hover:bg-secondary-500/25;
+    }
+
+    .btn--circle {
+        @apply h-[2.5rem] min-h-[2.5rem] w-[2.5rem] min-w-[2.5rem] rounded-full p-0;
+    }
+
+    .btn--circle-s {
+        @apply h-[2rem] min-h-[2rem] w-[2rem] min-w-[2rem] rounded-full p-0;
+    }
+
+    /* =============
+    -- LINK --
+    ============= */
+
+    .link {
+        @apply no-underline;
+    }
+
+    .link--primary {
+        @apply hover:text-primary-400;
+    }
+
+    .link--secondary {
+        @apply hover:text-secondary-400;
+    }
+
+    /* =============
+    -- INPUT --
+    ============= */
+
+    .input {
+        @apply min-w-0 rounded-lg border-2 bg-transparent p-2 outline-none;
+    }
+
+    .input--primary {
+        @apply border-primary-500 focus-within:border-primary-300 focus:border-primary-300;
+    }
+
+    .input--secondary {
+        @apply border-secondary-500 focus-within:border-secondary-300 focus:border-secondary-300;
+    }
+
+    .input--naked {
+        @apply border-none;
+    }
+
+    .input--filled {
+        @apply bg-surface-800 text-neutral-100 focus-within:bg-surface-700  focus:bg-surface-700;
+    }
+
+    .input--with-icon {
+        @apply border-transparent p-0 outline-none;
+    }
+
+    /* =============
+    -- TYPOGRAPHY --
+    ============= */
+
+    .title {
+    }
+
+    .title--l {
+        @apply text-5xl;
+    }
+
+    .title--m {
+        @apply text-3xl;
+    }
+
+    .title--s {
+        @apply text-xl;
+    }
+
+    .title--xs {
+        @apply text-lg;
+    }
+
+    .title--primary {
+        @apply text-primary-500;
+    }
+
+    .title--secondary {
+        @apply text-secondary-500;
+    }
+
+    /* =============
+    -- CONTAINER --
+    ============= */
+
+    .container {
+        @apply p-4 md:max-w-3xl;
+    }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
+@layer utilities {
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none; /* Firefox */
+    }
 }

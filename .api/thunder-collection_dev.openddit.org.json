@@ -1,0 +1,325 @@
+{
+    "client": "Thunder Client",
+    "collectionName": "dev.openddit",
+    "dateExported": "2023-08-06T05:44:44.520Z",
+    "version": "1.1",
+    "folders": [
+        {
+            "_id": "f049f0da-9f3b-4270-8516-1432de78cc59",
+            "name": "auth",
+            "containerId": "",
+            "created": "2023-08-05T20:16:01.399Z",
+            "sortNum": 10000
+        },
+        {
+            "_id": "cc22498b-5a71-46d9-b97a-16a35f358e7a",
+            "name": "comments",
+            "containerId": "",
+            "created": "2023-08-05T20:16:08.672Z",
+            "sortNum": 20000
+        },
+        {
+            "_id": "9320ef2e-2f7e-4dc2-aef1-c93baeda3339",
+            "name": "communities",
+            "containerId": "",
+            "created": "2023-08-05T20:16:37.422Z",
+            "sortNum": 30000
+        },
+        {
+            "_id": "5c0b4307-f7b7-4d42-8662-b0f1f0841974",
+            "name": "posts",
+            "containerId": "",
+            "created": "2023-08-05T20:16:50.641Z",
+            "sortNum": 40000
+        },
+        {
+            "_id": "c2841ef9-6759-4b29-a0d8-403394845379",
+            "name": "users",
+            "containerId": "",
+            "created": "2023-08-05T20:16:56.519Z",
+            "sortNum": 50000
+        }
+    ],
+    "requests": [
+        {
+            "_id": "6977d8fd-ec89-46be-8e05-b45de75da38e",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "5c0b4307-f7b7-4d42-8662-b0f1f0841974",
+            "name": "Get all posts",
+            "url": "/api/v1/posts?page=1&limit=25",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-07-31T16:52:56.940Z",
+            "modified": "2023-08-05T22:19:08.335Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "25",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "09f538e2-775c-4792-90c6-5f80782053b2",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "c2841ef9-6759-4b29-a0d8-403394845379",
+            "name": "Get single user",
+            "url": "/api/v1/users/{userID}",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-05T22:20:15.130Z",
+            "modified": "2023-08-05T22:20:52.955Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "userID",
+                    "value": "n6XdQ41OQh6ZEvOqzDcdJw",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "e9bbd638-9417-4ca0-868d-fb3b20b171d7",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "9320ef2e-2f7e-4dc2-aef1-c93baeda3339",
+            "name": "Get all communitites",
+            "url": "/api/v1/communities?page=1&limit=25",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-05T22:21:19.006Z",
+            "modified": "2023-08-05T22:23:08.936Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "25",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "021625bf-2ac3-406a-a235-cb2096fc4f6a",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "cc22498b-5a71-46d9-b97a-16a35f358e7a",
+            "name": "Get all comments from a post",
+            "url": "/api/v1/posts/{postID}/comments?page=1&limit=25",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-08-05T22:21:26.398Z",
+            "modified": "2023-08-05T22:22:21.718Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "postID",
+                    "value": "gVkGfcYgRjaChomlJ52-Ug",
+                    "isPath": true
+                },
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "25",
+                    "isPath": false
+                },
+                {
+                    "name": "parent",
+                    "value": "",
+                    "isDisabled": true,
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "6b772b57-0a72-4189-aef0-714f50ea57a8",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "f049f0da-9f3b-4270-8516-1432de78cc59",
+            "name": "Login",
+            "url": "/api/v1/auth/login",
+            "method": "POST",
+            "sortNum": 20000,
+            "created": "2023-08-05T20:17:06.314Z",
+            "modified": "2023-08-05T22:37:22.651Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"username\": \"jevv\",\n  \"password\": \"password123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "db05169f-91f6-4d0b-ab88-056c32e33740",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "5c0b4307-f7b7-4d42-8662-b0f1f0841974",
+            "name": "Get single post",
+            "url": "/api/v1/posts/{postID}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-05T22:19:21.124Z",
+            "modified": "2023-08-05T22:19:54.817Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "postID",
+                    "value": "gVkGfcYgRjaChomlJ52-Ug",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "36733b08-1791-49fd-b8f7-025b7c000c88",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "c2841ef9-6759-4b29-a0d8-403394845379",
+            "name": "Get all users",
+            "url": "/api/v1/users?page=1&limit=25",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-05T22:20:19.500Z",
+            "modified": "2023-08-05T22:21:02.520Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "page",
+                    "value": "1",
+                    "isPath": false
+                },
+                {
+                    "name": "limit",
+                    "value": "25",
+                    "isPath": false
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "932707ff-2c1f-436b-886b-1b38164d4537",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "9320ef2e-2f7e-4dc2-aef1-c93baeda3339",
+            "name": "Get single community",
+            "url": "/api/v1/communities/{communityID}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-05T22:21:23.341Z",
+            "modified": "2023-08-05T22:23:46.911Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "communityID",
+                    "value": "2L4BGjUZToOtNF5q9Vd6LQ",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "fd68c35f-24ac-4737-81f5-2db76ea221b7",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "cc22498b-5a71-46d9-b97a-16a35f358e7a",
+            "name": "Get single comment",
+            "url": "/api/v1/comments/{commentID}",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-08-05T22:21:27.771Z",
+            "modified": "2023-08-05T22:22:46.893Z",
+            "headers": [],
+            "params": [
+                {
+                    "name": "commentID",
+                    "value": "ctE_uuUfT62Ay5c5m2ELTQ",
+                    "isPath": true
+                }
+            ],
+            "tests": []
+        },
+        {
+            "_id": "d540a501-9e19-4f7a-a737-3cc9f374f82e",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "f049f0da-9f3b-4270-8516-1432de78cc59",
+            "name": "Register",
+            "url": "/api/v1/auth/refresh",
+            "method": "POST",
+            "sortNum": 25000,
+            "created": "2023-08-05T22:16:47.920Z",
+            "modified": "2023-08-05T22:18:02.502Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"refreshToken\": \"\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "f498740e-f620-4f29-95a7-5779b89d6be5",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "f049f0da-9f3b-4270-8516-1432de78cc59",
+            "name": "Refresh token",
+            "url": "/api/v1/auth/register",
+            "method": "POST",
+            "sortNum": 27500,
+            "created": "2023-08-05T22:17:35.353Z",
+            "modified": "2023-08-05T22:17:35.353Z",
+            "headers": [],
+            "params": [],
+            "body": {
+                "type": "json",
+                "raw": "{\n  \"email\": \"jevv@oppendit.org\",\n  \"username\": \"jevv\",\n  \"password\": \"password123\"\n}",
+                "form": []
+            },
+            "tests": []
+        },
+        {
+            "_id": "ade46551-6554-4646-825d-94c737062bd1",
+            "colId": "c5df5333-70d1-4a04-851e-61e6c1b50e10",
+            "containerId": "f049f0da-9f3b-4270-8516-1432de78cc59",
+            "name": "Get authenticated user",
+            "url": "/api/v1/auth/me",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-08-05T20:22:21.645Z",
+            "modified": "2023-08-05T22:30:50.627Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ],
+    "settings": {
+        "auth": {
+            "type": "oauth2",
+            "oauth2": {
+                "grantType": "password",
+                "tokenUrl": "https://dev.openddit.org/oauth/token",
+                "clientId": "",
+                "clientSecret": "",
+                "clientAuth": "in-header",
+                "username": "{{username}}",
+                "password": "{{password}}"
+            }
+        },
+        "options": {
+            "baseUrl": "{{url}}"
+        },
+        "envId": "e67f3308-48c7-49e1-bf80-440002956520"
+    }
+}

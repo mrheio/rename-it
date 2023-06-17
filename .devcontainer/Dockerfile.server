@@ -1,0 +1,9 @@
+FROM ghcr.io/openddit/oppendit-core:latest as core
+
+FROM busybox:1.35.0-uclibc as busybox
+
+COPY --from=core /ko-app/openddit /ko-app/openddit
+ADD server-entry.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
