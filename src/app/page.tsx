@@ -1,4 +1,3 @@
-import { getPosts } from '@/api';
 import { CaretDown } from '@/assets/icons';
 import { Button } from '@/components';
 import _PostCard from './_PostCard';
@@ -6,7 +5,7 @@ import _PostCard from './_PostCard';
 export const revalidate = 300;
 
 const Home = async () => {
-    const posts = await getPosts();
+    const posts = { items: [] };
 
     return (
         <main className="min-h-screen pt-navbar">

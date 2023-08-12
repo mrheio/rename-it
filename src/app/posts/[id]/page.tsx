@@ -1,11 +1,10 @@
-import { getPost } from '@/api';
 import { CaretDown, CaretUp } from '@/assets/icons';
 import { Button, Card } from '@/components';
 import { formatElapsedTime, getElapsedTime } from '@/utils';
 import _CommentsSection from './_CommentsSection';
 
 const Post = async ({ params }) => {
-    const post = await getPost(params.id);
+    const post = null;
 
     return (
         <main className="min-h-screen pt-navbar">
