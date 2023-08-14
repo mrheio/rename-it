@@ -20,8 +20,11 @@ model User {
   updated_at DateTime @updatedAt @default(now())
   deleted_at DateTime?
 
-  groups Group[]
+  groups Group[] @relation(name: "group_members")
+  owned_groups Group[] @relation(name: "group_owner")
+
   posts Post[]
+  
   comments Comment[]
 }
 
@@ -29,15 +32,17 @@ model Group {
   id String @id @default(uuid())
   name String @unique
   description String
-  slug String
+  slug String @unique
 
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt @default(now())
   deleted_at DateTime?
 
-  members_count Int @default(0)
+  owner User @relation(fields: [owner_id], references: [id], name: "group_owner")
+  owner_id String
 
-  users User[]
+  members User[] @relation(name: "group_members")
+
   posts Post[] 
 }
 
@@ -51,14 +56,14 @@ model Post {
   updated_at DateTime @updatedAt @default(now())
   deleted_at DateTime?
 
+  total_likes Int @default(0)
+  total_dislikes Int @default(0)
+
   group Group @relation(fields: [group_id], references: [id])
   group_id String
 
   created_by User @relation(fields: [created_by_id], references: [id])
   created_by_id String
-
-  total_likes Int @default(0)
-  total_dislikes Int @default(0)
 
   comments Comment[]
 }
