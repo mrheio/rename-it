@@ -1,0 +1,82 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  username String @unique
+  password String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  deleted_at DateTime?
+
+  groups Group[]
+  posts Post[]
+  comments Comment[]
+}
+
+model Group {
+  id String @id @default(uuid())
+  name String @unique
+  description String
+  slug String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  deleted_at DateTime?
+
+  members_count Int @default(0)
+
+  users User[]
+  posts Post[] 
+}
+
+model Post {
+  id String @id @default(uuid())
+  title String @unique
+  content String
+  slug String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  deleted_at DateTime?
+
+  group Group @relation(fields: [group_id], references: [id])
+  group_id String
+
+  created_by User @relation(fields: [created_by_id], references: [id])
+  created_by_id String
+
+  total_likes Int @default(0)
+  total_dislikes Int @default(0)
+
+  comments Comment[]
+}
+
+model Comment {
+  id String @id @default(uuid())
+  content String
+
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt @default(now())
+  deleted_at DateTime?
+
+  total_likes Int @default(0)
+  total_dislikes Int @default(0)
+
+  post Post @relation(fields: [post_id], references: [id])
+  post_id String
+
+  created_by User @relation(fields: [created_by_id], references: [id])
+  created_by_id String
+}
