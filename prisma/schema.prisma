@@ -20,7 +20,7 @@ model User {
   updated_at DateTime @updatedAt @default(now())
   deleted_at DateTime?
 
-  groups Group[] @relation(name: "group_members")
+  groups Group[] 
   owned_groups Group[] @relation(name: "group_owner")
 
   posts Post[]
@@ -41,7 +41,7 @@ model Group {
   owner User @relation(fields: [owner_id], references: [id], name: "group_owner")
   owner_id String
 
-  members User[] @relation(name: "group_members")
+  members User[]
 
   posts Post[] 
 }

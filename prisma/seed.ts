@@ -57,6 +57,13 @@ const fakeGroup = ({ users }) => {
     const [created_at, updated_at, deleted_at] = fakeModelDates();
     const owner = users[getRandomInt({ max: users.length - 1 })];
     const owner_id = owner.id;
+    const members = [
+        owner,
+        ...faker.helpers.arrayElements(
+            users.filter((u) => u.id !== owner_id),
+            getRandomInt({ max: users.length - 2 })
+        ),
+    ];
 
     return {
         id,
@@ -67,6 +74,7 @@ const fakeGroup = ({ users }) => {
         updated_at,
         deleted_at,
         owner_id,
+        members,
     };
 };
 
@@ -176,7 +184,11 @@ const main = async () => {
 
     console.log('Inserting groups...');
 
-    const insertGroupsResult = await prisma.group.createMany({ data: groups });
+    for (const group of groups) {
+        await prisma.group.create({
+            data: { ...group, members: { connect: group.members } },
+        });
+    }
 
     console.log('Groups inserted');
 
