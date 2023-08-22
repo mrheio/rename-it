@@ -1,5 +1,5 @@
-import { ComponentVariant } from '@/types';
 import { InputHTMLAttributes, ReactNode } from 'react';
+import { ComponentVariant } from '../types';
 
 export type InputDecoration = {
     start?: ReactNode;

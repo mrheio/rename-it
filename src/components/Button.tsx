@@ -1,6 +1,6 @@
-import { ComponentVariant } from '@/types';
 import clsx from 'clsx';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ComponentVariant } from './types';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     children: ReactNode;

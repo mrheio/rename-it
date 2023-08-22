@@ -1,7 +1,7 @@
-import { ComponentVariant } from '@/types';
 import clsx from 'clsx';
 import Link, { LinkProps } from 'next/link';
 import { ReactNode } from 'react';
+import { ComponentVariant } from './types';
 
 type AppLinkProps = LinkProps & {
     children: ReactNode;

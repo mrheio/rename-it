@@ -1,6 +1,6 @@
-import { Align } from '@/types';
 import clsx from 'clsx';
 import { createElement, ReactNode } from 'react';
+import { Align } from '../types';
 
 type AlignProp = {
     horizontal: Align;
