@@ -1,3 +1,4 @@
+export * from './auth';
 export * from './time';
 
 export const getRandomBoolean = () => {

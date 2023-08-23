@@ -19,14 +19,12 @@ const meSchema = z.object({
 const loginRequestSchema = z.object({
     username: z.string(),
     password: z.string(),
-    twoFA: z.string(),
 });
 
 const registerRequestSchema = z.object({
     email: z.string().email(),
     username: z.string(),
     password: z.string(),
-    twoFA: z.string(),
 });
 
 const refreshRequestSchema = z.object({
