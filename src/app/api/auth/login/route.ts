@@ -1,59 +1,43 @@
-import { SuccessResponse } from '@/api';
-import { authSchemasManager } from '@/schemas';
-import { checkIsSamePass, signJwt } from '@/utils';
+import { AppError, AuthSuccess, STATUS_CODES } from '@/api';
+import { authSchemasManager, validateData } from '@/schemas';
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '../../db';
+import { login, setAuthCookies } from '../auth.service';
 
 export const POST = async (request: NextRequest) => {
     const requestData = await request.json();
 
-    const parsedData =
-        authSchemasManager.requestBody.login.safeParse(requestData);
+    const [parsedData, parsingError] = validateData(
+        requestData,
+        authSchemasManager.requestBody.login
+    );
 
-    if (!parsedData.success) {
-        throw parsedData.error;
+    if (parsingError) {
+        return NextResponse.json(parsingError, {
+            status: STATUS_CODES.BAD_REQUEST,
+        });
     }
 
-    const potentialUser = await prisma.user.findUnique({
-        where: { username: parsedData.data.username },
-    });
+    try {
+        const [accessToken, refreshToken, exp] = await login(parsedData);
 
-    if (potentialUser) {
-        const passwordMatch = await checkIsSamePass(
-            parsedData.data.password,
-            potentialUser.password
-        );
+        const responseBody = AuthSuccess.login({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            exp,
+        });
 
-        if (passwordMatch) {
-            const { id, username, email } = potentialUser;
+        const response = NextResponse.json(responseBody, {
+            status: responseBody.code,
+        });
 
-            const accessToken = await signJwt(
-                { sub: id, email, username },
-                {
-                    exp: `${process.env.JWT_EXPIRES_IN}m`,
-                    secret: process.env.JWT_SECRET,
-                }
-            );
+        setAuthCookies(response, { accessToken, refreshToken });
 
-            const refreshToken = await signJwt(
-                { id },
-                { exp: '30d', secret: process.env.JWT_SECRET }
-            );
-
-            const payload = {
-                access_token: accessToken,
-                refresh_token: refreshToken,
-            };
-
-            const response = NextResponse.json(
-                new SuccessResponse({ message: 'User signed in', payload })
-            );
-
-            response.cookies
-                .set({ name: 'access_token', value: payload.access_token })
-                .set({ name: 'refresh_token', value: payload.refresh_token });
-
-            return response;
+        return response;
+    } catch (e) {
+        if (e instanceof AppError) {
+            return NextResponse.json(e, { status: e.code });
         }
+
+        throw e;
     }
 };

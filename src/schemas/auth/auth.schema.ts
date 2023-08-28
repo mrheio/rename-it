@@ -22,9 +22,9 @@ const loginRequestSchema = z.object({
 });
 
 const registerRequestSchema = z.object({
-    email: z.string().email(),
-    username: z.string(),
-    password: z.string(),
+    email: z.string().trim().min(1).email(),
+    username: z.string().trim().min(1),
+    password: z.string().trim().min(1),
 });
 
 const refreshRequestSchema = z.object({

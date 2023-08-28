@@ -1,9 +1,10 @@
-import type { NextRequest } from 'next/server';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 // This function can be marked `async` if using `await` inside
 export function middleware(request: NextRequest) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+
+    return response;
 }
 
 // See "Matching Paths" below to learn more

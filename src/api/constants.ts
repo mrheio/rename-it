@@ -56,3 +56,6 @@ export enum STATUS_CODES {
     INSUFFICIENT_STORAGE = 507,
     NETWORK_AUTHENTICATION_REQUIRED = 511,
 }
+
+export const ACCESS_TOKEN_KEY = 'access_token';
+export const REFRESH_TOKEN_KEY = 'refresh_token';
