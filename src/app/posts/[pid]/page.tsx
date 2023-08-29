@@ -1,10 +1,11 @@
 import { CaretDown, CaretUp } from '@/assets/icons';
 import { Button, Card } from '@/components';
 import { formatElapsedTime, getElapsedTime } from '@/utils';
-import _CommentsSection from './_CommentsSection';
 
 const Post = async ({ params }) => {
-    const post = null;
+    const res = await fetch(`/posts/${params.id}`);
+
+    const post = (await res.json()).payload;
 
     return (
         <main className="min-h-screen pt-navbar">
@@ -48,7 +49,7 @@ const Post = async ({ params }) => {
                     </Card>
 
                     <div className="mt-12 [&>*+*]:mt-4">
-                        <_CommentsSection post={post} />
+                        {/* <_CommentsSection post={post} /> */}
                     </div>
                 </section>
 

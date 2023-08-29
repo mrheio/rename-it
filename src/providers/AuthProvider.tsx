@@ -25,12 +25,8 @@ export const useAuthContext = () => {
 export const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState<AuthProps | null>(null);
 
-    const updateAuth = (authPayload: AuthProps) => {
-        setAuth(authPayload);
-    };
-
     return (
-        <AuthContext.Provider value={{ auth, updateAuth }}>
+        <AuthContext.Provider value={{ auth, setAuth }}>
             {children}
         </AuthContext.Provider>
     );
