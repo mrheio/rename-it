@@ -1,9 +1,10 @@
 import { CaretDown, CaretUp } from '@/assets/icons';
 import { Button, Card } from '@/components';
 import { formatElapsedTime, getElapsedTime } from '@/utils';
+import { CONFIG } from '../../../../config';
 
 const Post = async ({ params }) => {
-    const res = await fetch(`/posts/${params.id}`);
+    const res = await fetch(`${CONFIG.API_URL}/posts/${params.pid}`);
 
     const post = (await res.json()).payload;
 
@@ -21,7 +22,7 @@ const Post = async ({ params }) => {
                                     >
                                         <CaretUp weight="fill" />
                                         <span className="text-sm">
-                                            {post.upvotes}
+                                            {post.total_likes}
                                         </span>
                                     </button>
                                     <button
@@ -30,22 +31,21 @@ const Post = async ({ params }) => {
                                     >
                                         <CaretDown weight="fill" />
                                         <span className="text-sm">
-                                            {post.downvotes}
+                                            {post.total_dislikes}
                                         </span>
                                     </button>
                                 </div>
                             </div>
                             <div>
                                 <h4 className="mt-0 text-sm text-surface-500">
-                                    posted by /u/{post.author.name}{' '}
                                     {formatElapsedTime(
-                                        getElapsedTime(post.createdAt)
+                                        getElapsedTime(post.created_at)
                                     )}
                                 </h4>
                                 <h2 className="mb-0">{post.title}</h2>
                             </div>
                         </div>
-                        <p>{post.markdown}</p>
+                        <p>{post.content}</p>
                     </Card>
 
                     <div className="mt-12 [&>*+*]:mt-4">

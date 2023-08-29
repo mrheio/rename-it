@@ -11,6 +11,7 @@ const getEnvironmentVariable = (environmentVariable: string): string => {
 };
 
 export const CONFIG = {
+    API_URL: getEnvironmentVariable('API_URL'),
     JWT_SECRET: getEnvironmentVariable('JWT_SECRET'),
     JWT_EXPIRES_IN: getEnvironmentVariable('JWT_EXPIRES_IN'),
 };

@@ -7,23 +7,14 @@ import {
 } from '@/assets/icons';
 import { Card } from '@/components';
 import { ROUTES } from '@/router';
-import { Post } from '@/schemas';
 import Link from 'next/link';
 
-type _PostCardProps = {
-    post: Post;
-};
-
-const _PostCard = ({ post }: _PostCardProps) => {
+const _PostCard = ({ post }) => {
     return (
-        <Link
-            href={ROUTES.POST(post['@id'])}
-            className="block"
-            key={post['@id']}
-        >
+        <Link href={ROUTES.POST(post.id)} className="block" key={post.id}>
             <Card prose fluid highlightable>
                 <h2>{post.title}</h2>
-                <p className="line-clamp-3">{post.markdown}</p>
+                <p className="line-clamp-3">{post.content}</p>
                 <div className="flex justify-between gap-4">
                     <span className="flex items-center gap-2">
                         <span className="flex flex-col text-lg">
@@ -32,7 +23,9 @@ const _PostCard = ({ post }: _PostCardProps) => {
                                 className="flex items-center gap-2 hover:text-secondary"
                             >
                                 <CaretUp weight="fill" />
-                                <span className="text-sm">{post.upvotes}</span>
+                                <span className="text-sm">
+                                    {post.total_likes}
+                                </span>
                             </button>
                             <button
                                 type="button"
@@ -40,7 +33,7 @@ const _PostCard = ({ post }: _PostCardProps) => {
                             >
                                 <CaretDown weight="fill" />
                                 <span className="text-sm">
-                                    {post.downvotes}
+                                    {post.total_dislikes}
                                 </span>
                             </button>
                         </span>

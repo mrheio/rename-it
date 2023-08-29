@@ -1,11 +1,14 @@
 import { CaretDown } from '@/assets/icons';
 import { Button } from '@/components';
+import { CONFIG } from '../../config';
 import _PostCard from './_PostCard';
 
 export const revalidate = 300;
 
 const Home = async () => {
-    const posts = { items: [] };
+    const res = await fetch(`${CONFIG.API_URL}/posts`);
+
+    const posts = (await res.json()).payload.items;
 
     return (
         <main className="min-h-screen pt-navbar">
@@ -24,7 +27,7 @@ const Home = async () => {
                             />
                         </button>
                     </div>
-                    {posts.items.map((post, i) => (
+                    {posts.map((post, i) => (
                         <_PostCard post={post} />
                     ))}
                 </section>
