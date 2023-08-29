@@ -1,4 +1,9 @@
-import { ACCESS_TOKEN_KEY, REFRESH_TOKEN_KEY, UserError } from '@/api';
+import {
+    ACCESS_TOKEN_KEY,
+    AuthError,
+    REFRESH_TOKEN_KEY,
+    UserError,
+} from '@/api';
 import { LoginRequestBody, RegisterRequestBody } from '@/schemas';
 import { checkIsSamePass, hashPass, signJwt, verifyJwt } from '@/utils';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
@@ -103,4 +108,14 @@ export const setAuthCookies = (
     response.cookies
         .set({ name: ACCESS_TOKEN_KEY, value: cookies.accessToken })
         .set({ name: REFRESH_TOKEN_KEY, value: cookies.refreshToken });
+};
+
+export const getSession = async (acccessToken: string) => {
+    try {
+        const decoded = await verifyJwt(acccessToken, CONFIG.JWT_SECRET);
+
+        return decoded.payload;
+    } catch (e) {
+        throw AuthError.sessionExpired();
+    }
 };

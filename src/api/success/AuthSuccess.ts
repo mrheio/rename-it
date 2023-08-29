@@ -41,6 +41,10 @@ export default abstract class AuthSuccess extends AppSuccess {
             exp,
         });
     }
+
+    static session(payload: unknown) {
+        return new SessionSuccess(payload);
+    }
 }
 
 class RegisterSuccess extends AuthSuccess {
@@ -70,5 +74,11 @@ class RefreshSuccess extends AuthSuccess {
             message: 'Auth tokens refreshed.',
             payload,
         });
+    }
+}
+
+class SessionSuccess extends AuthSuccess {
+    constructor(payload: unknown) {
+        super({ message: 'Session details returned.', payload });
     }
 }

@@ -16,8 +16,25 @@ export default abstract class AuthError extends AppError {
         });
     }
 
+    static missingAccessToken() {
+        return new MissingAccessTokenError();
+    }
+
     static missingRefreshToken() {
         return new MissingRefreshTokenError();
+    }
+
+    static sessionExpired() {
+        return new SessionExpiredError();
+    }
+}
+
+class MissingAccessTokenError extends AuthError {
+    constructor() {
+        super({
+            code: STATUS_CODES.BAD_REQUEST,
+            message: 'Missing access token. No session available.',
+        });
     }
 }
 
@@ -26,6 +43,15 @@ class MissingRefreshTokenError extends AuthError {
         super({
             code: STATUS_CODES.UNAUTHORIZED,
             message: 'No refresh token provided.',
+        });
+    }
+}
+
+class SessionExpiredError extends AuthError {
+    constructor() {
+        super({
+            code: STATUS_CODES.BAD_REQUEST,
+            message: 'Session has expired.',
         });
     }
 }
