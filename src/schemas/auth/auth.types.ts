@@ -1,18 +1,12 @@
 import { z } from 'zod';
-import { authSchemasManager } from './auth.schema';
+import {
+    loginRequestSchema,
+    refreshRequestSchema,
+    registerRequestSchema,
+} from './auth.schema';
 
-export type Auth = z.infer<typeof authSchemasManager.auth>;
+export type LoginRequestBody = z.infer<typeof loginRequestSchema>;
 
-export type Me = z.infer<typeof authSchemasManager.me>;
+export type RefreshRequestBody = z.infer<typeof refreshRequestSchema>;
 
-export type LoginRequestBody = z.infer<
-    typeof authSchemasManager.requestBody.login
->;
-
-export type RefreshRequestBody = z.infer<
-    typeof authSchemasManager.requestBody.refresh
->;
-
-export type RegisterRequestBody = z.infer<
-    typeof authSchemasManager.requestBody.register
->;
+export type RegisterRequestBody = z.infer<typeof registerRequestSchema>;

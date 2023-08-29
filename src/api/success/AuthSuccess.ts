@@ -18,16 +18,28 @@ export default abstract class AuthSuccess extends AppSuccess {
         });
     }
 
-    static register(payload?: unknown) {
-        return new RegisterSuccess(payload);
+    static register(accessToken: string, refreshToken: string, exp: number) {
+        return new RegisterSuccess({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            exp,
+        });
     }
 
-    static login(payload?: unknown) {
-        return new LoginSuccess(payload);
+    static login(accessToken: string, refreshToken: string, exp: number) {
+        return new LoginSuccess({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            exp,
+        });
     }
 
-    static refresh(payload?: unknown) {
-        return new RefreshSuccess(payload);
+    static refresh(accessToken: string, refreshToken: string, exp: number) {
+        return new RefreshSuccess({
+            access_token: accessToken,
+            refresh_token: refreshToken,
+            exp,
+        });
     }
 }
 

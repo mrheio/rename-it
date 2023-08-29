@@ -18,4 +18,12 @@ export default abstract class AppError extends AppResponse {
         });
         this.details = props.details ?? null;
     }
+
+    static maybeThrow(e: unknown) {
+        if (e instanceof AppError) {
+            return e.toNextResponse();
+        }
+
+        throw e;
+    }
 }

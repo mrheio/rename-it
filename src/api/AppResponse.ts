@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server';
+
 export type AppResponseProps = {
     status: 'success' | 'error' | 'info';
     code: number;
@@ -15,5 +17,12 @@ export default abstract class AppResponse {
         this.status = props.status;
         this.code = props.code;
         this.message = props.message;
+    }
+
+    toNextResponse(init?: ResponseInit) {
+        return NextResponse.json(this, {
+            ...init,
+            status: this.code,
+        });
     }
 }
