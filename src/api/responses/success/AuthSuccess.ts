@@ -1,5 +1,5 @@
-import { STATUS_CODES } from '@/utils';
 import { NextResponse } from 'next/server';
+import { STATUS_CODES } from '../../constants';
 import AppSuccess from './AppSuccess';
 
 export default abstract class AuthSuccess extends AppSuccess {

@@ -1,4 +1,4 @@
-import { STATUS_CODES } from '@/utils';
+import { STATUS_CODES } from '../../constants';
 import AppError from './AppError';
 
 export default abstract class PostsError extends AppError {

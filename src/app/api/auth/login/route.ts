@@ -31,11 +31,8 @@ export const POST = async (request: NextRequest) => {
     try {
         const { accessToken, refreshToken, exp } = await login(parsedData);
 
-        const response = AuthSuccess.login(
-            accessToken,
-            refreshToken,
-            exp
-        ).toNextResponse();
+        const success = AuthSuccess.login(accessToken, refreshToken, exp);
+        const response = success.toNextResponse();
 
         response.cookies
             .set({

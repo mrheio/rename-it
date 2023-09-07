@@ -1,4 +1,4 @@
-import { STATUS_CODES } from '@/utils';
+import { STATUS_CODES } from '../../constants';
 import { AppErrorProps } from '../../types';
 import AppResponse from '../AppResponse';
 

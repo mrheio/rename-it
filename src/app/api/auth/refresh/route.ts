@@ -16,11 +16,8 @@ export const POST = async (request: NextRequest) => {
         exp,
     } = await refresh(refreshToken);
 
-    const response = AuthSuccess.refresh(
-        newAccessToken,
-        newRefreshToken,
-        exp
-    ).toNextResponse();
+    const success = AuthSuccess.refresh(newAccessToken, newRefreshToken, exp);
+    const response = success.toNextResponse();
 
     response.cookies
         .set({

@@ -17,13 +17,10 @@ export const POST = async (request: NextRequest) => {
     }
 
     try {
-        const [accessToken, refreshToken, exp] = await register(parsedData);
+        const { accessToken, refreshToken, exp } = await register(parsedData);
 
-        const response = AuthSuccess.register(
-            accessToken,
-            refreshToken,
-            exp
-        ).toNextResponse();
+        const success = AuthSuccess.register(accessToken, refreshToken, exp);
+        const response = success.toNextResponse();
 
         response.cookies
             .set({

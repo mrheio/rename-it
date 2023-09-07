@@ -1,5 +1,5 @@
-import { PRISMA_ERROR_CODES, STATUS_CODES } from '@/utils';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
+import { PRISMA_ERROR_CODES, STATUS_CODES } from '../../constants';
 import AppError from './AppError';
 
 export default abstract class UserError extends AppError {
