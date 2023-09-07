@@ -1,22 +1,16 @@
 'use client';
 
-import { AuthProvider } from '@/providers';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
+import Initializer from './initializer';
 
-type _ProvidersProps = {
-    children: ReactNode;
-};
-
-const _Providers = ({ children }: _ProvidersProps) => {
+const _Providers = (props) => {
     const [queryClient] = useState(() => new QueryClient());
 
     return (
-        <AuthProvider>
-            <QueryClientProvider client={queryClient}>
-                {children}
-            </QueryClientProvider>
-        </AuthProvider>
+        <QueryClientProvider client={queryClient}>
+            <Initializer>{props.children}</Initializer>
+        </QueryClientProvider>
     );
 };
 
