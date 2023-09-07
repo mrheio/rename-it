@@ -18,7 +18,11 @@ const Login = () => {
 
     return (
         <main className="flex min-h-screen items-center pt-navbar">
-            <form className="mx-auto flex w-full max-w-3xl flex-col gap-8 p-8" action={ROUTES.LOGIN} method="POST">
+            <form
+                className="mx-auto flex w-full max-w-3xl flex-col gap-8 p-8"
+                action={ROUTES.PUBLIC.LOGIN}
+                method="POST"
+            >
                 <Title weight="bold">Enter your account</Title>
                 <div className="grid gap-2">
                     <label htmlFor="username">Username</label>
@@ -42,7 +46,7 @@ const Login = () => {
                 <Button type="submit">Enter</Button>
                 <AppLink
                     className="text-center"
-                    href={ROUTES.REGISTER}
+                    href={ROUTES.PUBLIC.REGISTER}
                     weight="bold"
                 >
                     No account? Create one here

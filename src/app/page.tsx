@@ -1,7 +1,6 @@
 import { CaretDown } from '@/assets/icons';
 import { Button } from '@/components';
 import { CONFIG } from '../../config';
-import _PostCard from './_PostCard';
 
 export const revalidate = 300;
 
@@ -27,9 +26,9 @@ const Home = async () => {
                             />
                         </button>
                     </div>
-                    {posts.map((post, i) => (
+                    {/* {posts.map((post, i) => (
                         <_PostCard post={post} />
-                    ))}
+                    ))} */}
                 </section>
 
                 <aside className="hidden pt-[3rem] md:block md:w-[40%] md:max-w-xs">

@@ -12,7 +12,7 @@ const TopNavbar = ({ openModal }) => {
     return (
         <div className="flex h-topnavbar items-center justify-between gap-8 py-4">
             <Link
-                href={ROUTES.HOME}
+                href={ROUTES.PUBLIC.HOME}
                 className="flex basis-1/5 items-center gap-2"
             >
                 <Image src={logo} alt="openddit" style={{ width: '28px' }} />
@@ -37,7 +37,7 @@ const TopNavbar = ({ openModal }) => {
             </div>
 
             <div className="basic-1/5 flex justify-end">
-                <AppLink weight="bold" href={ROUTES.LOGIN}>
+                <AppLink weight="bold" href={ROUTES.PUBLIC.LOGIN}>
                     Get Started
                 </AppLink>
             </div>

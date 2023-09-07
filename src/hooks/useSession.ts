@@ -1,11 +1,11 @@
-import { myky } from '@/api';
 import { useQuery } from '@tanstack/react-query';
+import ky from 'ky';
 
 const useSession = () => {
     const query = useQuery({
         queryKey: ['session'],
         queryFn: async () => {
-            const result = await myky.get('/api/auth/session').json();
+            const result = await ky.get('/api/auth/session').json();
             return result.payload;
         },
     });

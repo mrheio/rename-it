@@ -6,12 +6,11 @@ import {
     ShareNetwork,
 } from '@/assets/icons';
 import { Card } from '@/components';
-import { ROUTES } from '@/router';
 import Link from 'next/link';
 
 const _PostCard = ({ post }) => {
     return (
-        <Link href={ROUTES.POST(post.id)} className="block" key={post.id}>
+        <Link href="#" className="block" key={post.id}>
             <Card prose fluid highlightable>
                 <h2>{post.title}</h2>
                 <p className="line-clamp-3">{post.content}</p>
