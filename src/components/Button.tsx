@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import Loading from './Loading';
 import { ComponentVariant } from './types';
 
 type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
@@ -7,6 +8,7 @@ type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
     variant?: ComponentVariant;
     outlined?: boolean;
     fluid?: boolean;
+    loading?: boolean;
 };
 
 const Button = ({
@@ -15,7 +17,9 @@ const Button = ({
     outlined = false,
     fluid = false,
     type = 'button',
+    loading = false,
     className,
+    disabled,
     ...rest
 }: ButtonProps) => {
     return (
@@ -29,10 +33,13 @@ const Button = ({
                 'btn--outlined': outlined,
                 'btn--outlined-primary': outlined && variant === 'primary',
                 'btn--outlined-secondary': outlined && variant === 'secondary',
+                'btn--loading': loading,
             })}
             type={type}
+            disabled={loading || disabled}
             {...rest}
         >
+            {loading && <Loading loading={loading} />}
             {children}
         </button>
     );

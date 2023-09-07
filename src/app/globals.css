@@ -10,7 +10,7 @@
     -- BUTTON --
     ============= */
     .btn {
-        @apply rounded-lg px-6 py-2 font-semibold active:animate-zoom-in-out;
+        @apply cursor-pointer rounded-lg px-6 py-2 font-semibold active:animate-zoom-in-out;
     }
 
     .btn--naked {
@@ -43,6 +43,10 @@
 
     .btn--circle-s {
         @apply h-[2rem] min-h-[2rem] w-[2rem] min-w-[2rem] rounded-full p-0;
+    }
+
+    .btn--loading {
+        @apply flex items-center justify-center gap-2;
     }
 
     /* =============
