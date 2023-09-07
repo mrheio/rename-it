@@ -1,6 +1,6 @@
 import { AppError, PostsSuccess } from '@/api';
+import { getPost } from '@/server';
 import { NextRequest } from 'next/server';
-import { getPost } from '../posts.service';
 
 export const GET = async (request: NextRequest, context) => {
     const { pid } = context.params;
@@ -10,6 +10,6 @@ export const GET = async (request: NextRequest, context) => {
 
         return PostsSuccess.getOne(post).toNextResponse();
     } catch (e) {
-        return AppError.maybeThrow(e);
+        return AppError.throwOrToNextResponse(e);
     }
 };

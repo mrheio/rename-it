@@ -1,22 +1,35 @@
 import { AppError, AuthSuccess } from '@/api';
 import { loginRequestSchema, validateData } from '@/schemas';
+import { login } from '@/server';
+import { CookiesManager } from '@/utils';
 import { NextRequest } from 'next/server';
-import { login, setAuthCookies } from '../auth.service';
 
 export const POST = async (request: NextRequest) => {
+    const contentType = request.headers.get('Content-Type');
+
+    let requestData = null;
+
+    if (contentType === 'application/json') {
+        requestData = await request.json();
+    } else if (contentType === 'application/x-www-form-urlencoded') {
+        const formData = await request.formData();
+        requestData = {
+            username: formData.get('username')?.toString(),
+            password: formData.get('password')?.toString(),
+        };
+    }
+
+    const [parsedData, parsingError] = validateData(
+        requestData,
+        loginRequestSchema
+    );
+
+    if (parsingError) {
+        return parsingError.toNextResponse();
+    }
+
     try {
-        const requestData = await request.json();
-
-        const [parsedData, parsingError] = validateData(
-            requestData,
-            loginRequestSchema
-        );
-
-        if (parsingError) {
-            return parsingError.toNextResponse();
-        }
-
-        const [accessToken, refreshToken, exp] = await login(parsedData);
+        const { accessToken, refreshToken, exp } = await login(parsedData);
 
         const response = AuthSuccess.login(
             accessToken,
@@ -24,10 +37,24 @@ export const POST = async (request: NextRequest) => {
             exp
         ).toNextResponse();
 
-        setAuthCookies(response, { accessToken, refreshToken });
+        response.cookies
+            .set({
+                name: CookiesManager.accessToken.name,
+                value: accessToken,
+                httpOnly: true,
+            })
+            .set({
+                name: CookiesManager.refreshToken.name,
+                value: refreshToken,
+                httpOnly: true,
+            })
+            .set({
+                name: CookiesManager.expiryTime.name,
+                value: exp.toString(),
+            });
 
         return response;
     } catch (e) {
-        return AppError.maybeThrow(e);
+        return AppError.throwOrToNextResponse(e);
     }
 };

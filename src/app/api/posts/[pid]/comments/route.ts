@@ -1,6 +1,6 @@
 import { CommentsSuccess } from '@/api';
+import { getPostComments } from '@/server';
 import { NextRequest } from 'next/server';
-import { getPostComments } from './comments.service';
 
 export const GET = async (request: NextRequest, context) => {
     const { pid } = context.params;
