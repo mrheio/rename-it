@@ -1,23 +1,8 @@
-import { STATUS_CODES } from '@/api';
+import { PRISMA_ERROR_CODES, STATUS_CODES } from '@/utils';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
-import { PRISMA_ERROR_CODES } from '../../../prisma/codes';
 import AppError from './AppError';
 
-type UserErrorProps = {
-    code?: number;
-    message?: string;
-    details?: unknown;
-};
-
 export default abstract class UserError extends AppError {
-    constructor(props: UserErrorProps) {
-        super({
-            code: props.code,
-            message: props.message ?? 'Unknown user error',
-            details: props.details,
-        });
-    }
-
     static emailTaken(email?: string) {
         return new UserEmailTakenError(email);
     }

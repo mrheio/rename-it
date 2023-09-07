@@ -1,15 +1,7 @@
-import { STATUS_CODES } from '../constants';
+import { STATUS_CODES } from '@/utils';
 import AppError from './AppError';
 
 export default abstract class PostsError extends AppError {
-    constructor(props) {
-        super({
-            code: props.code,
-            message: props.message,
-            details: props.details,
-        });
-    }
-
     static notFound(id: string) {
         return new PostNotFoundError(id);
     }

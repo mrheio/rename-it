@@ -1,21 +1,7 @@
-import { STATUS_CODES } from '../constants';
+import { STATUS_CODES } from '@/utils';
 import AppError from './AppError';
 
-type AuthErrorProps = {
-    code?: number;
-    message?: string;
-    details?: unknown;
-};
-
 export default abstract class AuthError extends AppError {
-    constructor(props: AuthErrorProps) {
-        super({
-            code: props.code,
-            message: props.message ?? 'Authentication failed.',
-            details: props.details,
-        });
-    }
-
     static missingAccessToken() {
         return new MissingAccessTokenError();
     }
@@ -27,12 +13,24 @@ export default abstract class AuthError extends AppError {
     static sessionExpired() {
         return new SessionExpiredError();
     }
+
+    static missingSession() {
+        return new MissingSessionError();
+    }
+
+    static unauthorized() {
+        return new UnauthorizedError();
+    }
+
+    static isSessionExpiredError(error: unknown): error is SessionExpiredError {
+        return error instanceof SessionExpiredError;
+    }
 }
 
 class MissingAccessTokenError extends AuthError {
     constructor() {
         super({
-            code: STATUS_CODES.BAD_REQUEST,
+            code: STATUS_CODES.UNAUTHORIZED,
             message: 'Missing access token. No session available.',
         });
     }
@@ -50,8 +48,23 @@ class MissingRefreshTokenError extends AuthError {
 class SessionExpiredError extends AuthError {
     constructor() {
         super({
-            code: STATUS_CODES.BAD_REQUEST,
+            code: STATUS_CODES.UNAUTHORIZED,
             message: 'Session has expired.',
+        });
+    }
+}
+
+class MissingSessionError extends AuthError {
+    constructor() {
+        super({ code: STATUS_CODES.NOT_FOUND, message: 'No auth session.' });
+    }
+}
+
+class UnauthorizedError extends AuthError {
+    constructor() {
+        super({
+            code: STATUS_CODES.UNAUTHORIZED,
+            message: 'Unauthorized request',
         });
     }
 }

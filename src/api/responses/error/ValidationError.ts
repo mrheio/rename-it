@@ -1,13 +1,9 @@
 import { z } from 'zod';
+import { AppErrorProps } from '../../types';
 import AppError from './AppError';
 
-type ValidationErrorProps = {
-    message?: string;
-    details?: unknown;
-};
-
 export default class ValidationError extends AppError {
-    constructor(props: ValidationErrorProps) {
+    constructor(props: AppErrorProps) {
         super({
             message: props.message ?? 'Error when validating data.',
             details: props.details ?? null,

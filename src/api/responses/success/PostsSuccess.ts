@@ -1,14 +1,6 @@
 import AppSuccess from './AppSuccess';
 
 export default abstract class PostsSuccess extends AppSuccess {
-    constructor(props) {
-        super({
-            code: props.code,
-            message: props.message,
-            payload: props.payload,
-        });
-    }
-
     static get(posts) {
         return new GetPostsSuccess(posts);
     }

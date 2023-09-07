@@ -1,10 +1,5 @@
 import { NextResponse } from 'next/server';
-
-export type AppResponseProps = {
-    status: 'success' | 'error' | 'info';
-    code: number;
-    message: string;
-};
+import { AppResponseProps } from '../types';
 
 export default abstract class AppResponse {
     name: string;

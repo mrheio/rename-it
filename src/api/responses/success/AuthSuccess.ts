@@ -1,22 +1,9 @@
-import { STATUS_CODES } from '../constants';
+import { STATUS_CODES } from '@/utils';
+import { NextResponse } from 'next/server';
 import AppSuccess from './AppSuccess';
-
-type AppSuccessProps = {
-    code?: number;
-    message: string;
-    payload?: unknown;
-};
 
 export default abstract class AuthSuccess extends AppSuccess {
     payload: unknown;
-
-    constructor(props: AppSuccessProps) {
-        super({
-            code: props.code,
-            message: props.message ?? 'Authentication succeeded.',
-            payload: props.payload,
-        });
-    }
 
     static register(accessToken: string, refreshToken: string, exp: number) {
         return new RegisterSuccess({
@@ -45,6 +32,10 @@ export default abstract class AuthSuccess extends AppSuccess {
     static session(payload: unknown) {
         return new SessionSuccess(payload);
     }
+
+    static logout() {
+        return new LogoutSuccess();
+    }
 }
 
 class RegisterSuccess extends AuthSuccess {
@@ -55,30 +46,66 @@ class RegisterSuccess extends AuthSuccess {
             payload,
         });
     }
+
+    toNextResponse(init?: ResponseInit | undefined) {
+        return NextResponse.json(
+            { ...(this.payload as object) },
+            {
+                ...init,
+                status: this.code,
+            }
+        );
+    }
 }
 
 class LoginSuccess extends AuthSuccess {
     constructor(payload?: unknown) {
         super({
-            code: STATUS_CODES.CREATED,
+            code: STATUS_CODES.OK,
             message: 'User signed in.',
             payload,
         });
+    }
+
+    toNextResponse(init?: ResponseInit | undefined) {
+        return NextResponse.json(
+            { ...(this.payload as object) },
+            {
+                ...init,
+                status: this.code,
+            }
+        );
     }
 }
 
 class RefreshSuccess extends AuthSuccess {
     constructor(payload?: unknown) {
         super({
-            code: STATUS_CODES.CREATED,
+            code: STATUS_CODES.OK,
             message: 'Auth tokens refreshed.',
             payload,
         });
+    }
+
+    toNextResponse(init?: ResponseInit | undefined) {
+        return NextResponse.json(
+            { ...(this.payload as object) },
+            {
+                ...init,
+                status: this.code,
+            }
+        );
     }
 }
 
 class SessionSuccess extends AuthSuccess {
     constructor(payload: unknown) {
-        super({ message: 'Session details returned.', payload });
+        super({ message: 'Session returned.', payload });
+    }
+}
+
+class LogoutSuccess extends AuthSuccess {
+    constructor() {
+        super({ message: 'Session terminated.' });
     }
 }

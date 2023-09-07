@@ -1,11 +1,6 @@
-import { STATUS_CODES } from '@/api';
+import { STATUS_CODES } from '@/utils';
+import { AppSuccessProps } from '../../types';
 import AppResponse from '../AppResponse';
-
-type AppSuccessProps = {
-    code?: number;
-    message?: string;
-    payload?: unknown;
-};
 
 export default class AppSuccess extends AppResponse {
     payload: unknown;

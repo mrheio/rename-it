@@ -1,11 +1,6 @@
-import { STATUS_CODES } from '@/api';
+import { STATUS_CODES } from '@/utils';
+import { AppErrorProps } from '../../types';
 import AppResponse from '../AppResponse';
-
-type AppErrorProps = {
-    code?: number;
-    message?: string;
-    details?: unknown;
-};
 
 export default abstract class AppError extends AppResponse {
     details: unknown;
@@ -19,7 +14,7 @@ export default abstract class AppError extends AppResponse {
         this.details = props.details ?? null;
     }
 
-    static maybeThrow(e: unknown) {
+    static throwOrToNextResponse(e: unknown) {
         if (e instanceof AppError) {
             return e.toNextResponse();
         }
