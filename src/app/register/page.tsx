@@ -3,40 +3,31 @@
 import { AppLink, Button, Input, Title } from '@/components';
 import { useRegister } from '@/hooks';
 import { ROUTES } from '@/router';
+import { registerFormSchema } from '@/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import {
-    ChangeEventHandler,
-    FormEventHandler,
-    useEffect,
-    useState,
-} from 'react';
+import { useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 const Register = () => {
     const router = useRouter();
     const {
-        mutate: register,
+        mutate: registerUser,
         isLoading: isRegisterRunning,
         isSuccess: isRegisterSuccess,
     } = useRegister();
-    const [fields, setFields] = useState({
-        email: '',
-        username: '',
-        password: '',
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm({
+        defaultValues: { email: '', username: '', password: '' },
+        resolver: zodResolver(registerFormSchema),
     });
 
-    const handleFormInputChange: ChangeEventHandler<HTMLInputElement> = (
-        event
-    ) => {
-        setFields((prev) => ({
-            ...prev,
-            [event.target.name]: event.target.value,
-        }));
-    };
-
-    const handleRegister: FormEventHandler<HTMLFormElement> = (event) => {
-        event.preventDefault();
-        register(fields);
-    };
+    const handleRegister = handleSubmit((data) => {
+        registerUser(data);
+    });
 
     useEffect(() => {
         if (isRegisterSuccess) {
@@ -53,41 +44,36 @@ const Register = () => {
                 <Title weight="bold">Create your account</Title>
                 <div className="grid gap-2">
                     <label htmlFor="email">Email</label>
-                    <Input
-                        id="email"
-                        name="email"
-                        value={fields.email}
-                        onChange={handleFormInputChange}
-                    />
+                    <Input id="email" label="email" register={register} />
+                    <div className="min-h-[1.5rem] text-error-500">
+                        {errors.email?.message}
+                    </div>
                 </div>
                 <div className="grid gap-2">
                     <label htmlFor="username">Username</label>
-                    <Input
-                        id="username"
-                        name="username"
-                        value={fields.username}
-                        onChange={handleFormInputChange}
-                    />
+                    <Input id="username" label="username" register={register} />
+                    <div className="min-h-[1.5rem] text-error-500">
+                        {errors.username?.message}
+                    </div>
                 </div>
                 <div className="grid gap-2">
                     <label htmlFor="password">Password</label>
                     <Input
                         id="password"
-                        name="password"
+                        label="password"
                         type="password"
-                        value={fields.password}
-                        onChange={handleFormInputChange}
+                        register={register}
                     />
+                    <div className="min-h-[1.5rem] text-error-500">
+                        {errors.password?.message}
+                    </div>
                 </div>
+
                 <Button type="submit" loading={isRegisterRunning}>
                     Create account
                 </Button>
-                <AppLink
-                    className="text-center"
-                    href={ROUTES.PUBLIC.LOGIN}
-                    weight="bold"
-                >
-                    Already have an account? Sign in here
+                <AppLink className="text-center" href={ROUTES.PUBLIC.LOGIN}>
+                    Already have an account? <strong>Sign in here</strong>
                 </AppLink>
             </form>
         </main>

@@ -1,5 +1,5 @@
 import { AppError, AuthSuccess } from '@/api';
-import { loginRequestSchema, validateData } from '@/schemas';
+import { loginFormSchema, validateData } from '@/schemas';
 import { login } from '@/server';
 import { CookieKey } from '@/utils';
 import { NextRequest } from 'next/server';
@@ -11,7 +11,7 @@ export const POST = async (request: NextRequest) => {
 
     const [parsedData, parsingError] = validateData(
         requestData,
-        loginRequestSchema
+        loginFormSchema
     );
 
     if (parsingError) {

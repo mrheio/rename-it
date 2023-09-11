@@ -1,13 +1,18 @@
-export * from './api.schema';
-export * from './auth';
-export * from './comment';
-export * from './community';
-export * from './post';
-export * from './user';
-
 import { ValidationError } from '@/api';
 import { z } from 'zod';
-import './error';
+
+const customErrorMap: z.ZodErrorMap = (issue, ctx) => {
+    if (issue.code === z.ZodIssueCode.too_small) {
+        if (issue.minimum === 1) {
+            if (issue.type === 'string') {
+            }
+        }
+    }
+
+    return { message: ctx.defaultError };
+};
+
+z.setErrorMap(customErrorMap);
 
 export const validateData = <T>(
     data: any,
@@ -22,3 +27,6 @@ export const validateData = <T>(
 
     return [parseResult.data, null];
 };
+
+export * from './auth.schema';
+export * from './forms.schema';

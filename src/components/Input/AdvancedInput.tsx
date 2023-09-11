@@ -1,15 +1,18 @@
 import clsx from 'clsx';
 import { AdvancedInputProps } from './types';
 
-const AdvancedInput = ({
-    decoration,
-    filled = false,
-    variant = 'primary',
-    fluid = false,
-    type = 'text',
-    className,
-    ...rest
-}: AdvancedInputProps) => {
+const AdvancedInput = (props: AdvancedInputProps) => {
+    const {
+        register,
+        decoration,
+        filled = false,
+        variant = 'primary',
+        fluid = false,
+        type = 'text',
+        placeholder,
+        label,
+    } = props;
+
     return (
         <div
             className={clsx({
@@ -32,7 +35,8 @@ const AdvancedInput = ({
                     'input--with-icon': true,
                 })}
                 type={type}
-                {...rest}
+                placeholder={placeholder}
+                {...register?.(label)}
             />
 
             {decoration?.end && (

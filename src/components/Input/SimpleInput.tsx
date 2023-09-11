@@ -1,14 +1,16 @@
 import clsx from 'clsx';
 import { SimpleInputProps } from './types';
 
-const SimpleInput = ({
-    fluid = false,
-    filled = false,
-    variant = 'primary',
-    type = 'text',
-    className,
-    ...rest
-}: SimpleInputProps) => {
+const SimpleInput = (props: SimpleInputProps) => {
+    const {
+        register,
+        fluid = false,
+        filled = false,
+        variant = 'primary',
+        type = 'text',
+        label,
+    } = props;
+
     return (
         <input
             className={clsx({
@@ -20,7 +22,7 @@ const SimpleInput = ({
                 'input--secondary': variant === 'secondary',
             })}
             type={type}
-            {...rest}
+            {...register?.(label)}
         />
     );
 };

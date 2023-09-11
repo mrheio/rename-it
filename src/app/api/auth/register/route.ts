@@ -1,5 +1,5 @@
 import { AppError, AuthSuccess } from '@/api';
-import { registerRequestSchema, validateData } from '@/schemas';
+import { registerFormSchema, validateData } from '@/schemas';
 import { register } from '@/server';
 import { CookieKey } from '@/utils';
 import { NextRequest } from 'next/server';
@@ -9,7 +9,7 @@ export const POST = async (request: NextRequest) => {
 
     const [parsedData, parsingError] = validateData(
         requestData,
-        registerRequestSchema
+        registerFormSchema
     );
 
     if (parsingError) {
