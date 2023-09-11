@@ -25,7 +25,7 @@ const TopNavbar = ({ openModal }) => {
                     weight="semibold"
                     className="hidden md:block"
                 >
-                    openddit
+                    rename-it
                 </Title>
             </Link>
 

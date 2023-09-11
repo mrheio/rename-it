@@ -6,8 +6,8 @@ import _Providers from './providers';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata = {
-    title: 'openddit',
-    description: 'Openddit - Like Reddit, but opened to everyone',
+    title: 'rename-it',
+    description: 'Renameit - Make it your own',
 };
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
