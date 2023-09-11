@@ -15,7 +15,9 @@ export default abstract class AppResponse {
     }
 
     toNextResponse(init?: ResponseInit) {
-        return NextResponse.json(this, {
+        const { code, ...body } = this;
+
+        return NextResponse.json(body, {
             ...init,
             status: this.code,
         });

@@ -1,39 +1,34 @@
 import { AuthError, AuthSuccess } from '@/api';
 import { refresh } from '@/server';
-import { CookiesManager } from '@/utils';
+import { CookieKey } from '@/utils';
 import { NextRequest } from 'next/server';
 
 export const POST = async (request: NextRequest) => {
-    const refreshToken = CookiesManager.refreshToken.value(request);
+    const contentType = request.headers.get('Content-Type');
+    let requestBody = null;
 
-    if (!refreshToken) {
-        return AuthError.missingRefreshToken().toNextResponse();
+    if (contentType === 'application/json') {
+        requestBody = await request.json();
     }
 
-    const {
-        accessToken: newAccessToken,
-        refreshToken: newRefreshToken,
-        exp,
-    } = await refresh(refreshToken);
+    const refreshToken =
+        requestBody?.refresh_token ??
+        request.cookies.get(CookieKey.RefreshToken)?.value;
 
-    const success = AuthSuccess.refresh(newAccessToken, newRefreshToken, exp);
+    if (!refreshToken) {
+        return AuthError.unauthorized().toNextResponse();
+    }
+
+    const { accessToken: newAccessToken, refreshToken: newRefreshToken } =
+        await refresh(refreshToken);
+
+    const success = AuthSuccess.refresh(newAccessToken, newRefreshToken);
     const response = success.toNextResponse();
 
-    response.cookies
-        .set({
-            name: CookiesManager.accessToken.name,
-            value: newAccessToken,
-            httpOnly: true,
-        })
-        .set({
-            name: CookiesManager.refreshToken.name,
-            value: newRefreshToken,
-            httpOnly: true,
-        })
-        .set({
-            name: CookiesManager.expiryTime.name,
-            value: exp.toString(),
-        });
+    const options = { httpOnly: true };
+
+    response.cookies.set(CookieKey.AccessToken, newAccessToken, options);
+    response.cookies.set(CookieKey.RefreshToken, newRefreshToken, options);
 
     return response;
 };

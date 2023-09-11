@@ -5,27 +5,24 @@ import AppSuccess from './AppSuccess';
 export default abstract class AuthSuccess extends AppSuccess {
     payload: unknown;
 
-    static register(accessToken: string, refreshToken: string, exp: number) {
+    static register(accessToken: string, refreshToken: string) {
         return new RegisterSuccess({
             access_token: accessToken,
             refresh_token: refreshToken,
-            exp,
         });
     }
 
-    static login(accessToken: string, refreshToken: string, exp: number) {
+    static login(accessToken: string, refreshToken: string) {
         return new LoginSuccess({
             access_token: accessToken,
             refresh_token: refreshToken,
-            exp,
         });
     }
 
-    static refresh(accessToken: string, refreshToken: string, exp: number) {
+    static refresh(accessToken: string, refreshToken: string) {
         return new RefreshSuccess({
             access_token: accessToken,
             refresh_token: refreshToken,
-            exp,
         });
     }
 

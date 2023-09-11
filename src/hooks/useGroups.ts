@@ -1,18 +1,19 @@
+import { myfetch } from '@/myfetch';
 import { useQuery } from '@tanstack/react-query';
+import useSession from './useSession';
 
 const useGroups = () => {
+    const { data: session } = useSession();
+    const userId = session?.id;
+
     const query = useQuery({
-        queryKey: ['groups'],
-        queryFn: async () => {
-            const result = await fetch(
-                '/api/users/919d86b0-55c1-4b74-a37c-8ddf04d853dd/groups'
-            );
+        queryKey: ['groups', userId],
+        queryFn: async ({ queryKey }) => {
+            const uid = queryKey[1];
 
-            const body = await result.json();
+            const data = await myfetch(`/api/users/${uid}/groups`).GET().data();
 
-            const { items } = body.payload;
-
-            return items;
+            return data?.payload?.items ?? [];
         },
     });
 

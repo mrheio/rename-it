@@ -1,11 +1,27 @@
 'use client';
 
 import { Gear, Person } from '@/assets/icons';
+import { useLogout } from '@/hooks';
+import { ROUTES } from '@/router';
 import { Dialog, Transition } from '@headlessui/react';
 import 'keen-slider/keen-slider.min.css';
-import { Fragment } from 'react';
+import { useRouter } from 'next/navigation';
+import { Fragment, useEffect } from 'react';
 
 const Sidebar = ({ isOpen, closeModal }) => {
+    const router = useRouter();
+    const { mutate: logout, isSuccess: isLogoutSuccess } = useLogout();
+
+    const handleLogout = () => {
+        logout();
+    };
+
+    useEffect(() => {
+        if (isLogoutSuccess) {
+            window.location.reload();
+        }
+    }, [isLogoutSuccess]);
+
     return (
         <Transition appear show={isOpen} as={Fragment}>
             <Dialog as="div" className="relative z-20" onClose={closeModal}>
@@ -33,6 +49,11 @@ const Sidebar = ({ isOpen, closeModal }) => {
                             <ul className="mt-2 w-full">
                                 <li>
                                     <button
+                                        onClick={() =>
+                                            router.push(
+                                                ROUTES.PROTECTED.PROFILE
+                                            )
+                                        }
                                         type="button"
                                         className="flex w-full gap-2 p-4 hover:bg-surface-900 hover:text-primary"
                                     >
@@ -41,10 +62,11 @@ const Sidebar = ({ isOpen, closeModal }) => {
                                 </li>
                                 <li>
                                     <button
+                                        onClick={handleLogout}
                                         type="button"
-                                        className="flex w-full gap-2 p-4 hover:bg-surface-900 hover:text-primary"
+                                        className="flex w-full items-center gap-2 p-4 hover:bg-surface-900 hover:text-primary"
                                     >
-                                        <Gear /> Settings
+                                        <Gear /> Sign out
                                     </button>
                                 </li>
                             </ul>

@@ -1,5 +1,4 @@
-import { SignJWT, errors, jwtVerify } from 'jose';
-import { CONFIG } from '../../config';
+import { SignJWT, decodeJwt, jwtVerify } from 'jose';
 
 export const signJwt = async (payload, options) => {
     const alg = 'HS256';
@@ -19,30 +18,17 @@ export const signJwt = async (payload, options) => {
     return jwtCreator.sign(signature);
 };
 
-export const verifyJwt = async (
-    token: string,
-    secret: string = CONFIG.JWT_SECRET
-) => {
+export const verifyJwt = async (token: string, secret: string) => {
     return jwtVerify(token, new TextEncoder().encode(secret));
 };
 
-export const didTokenExpire = async (token, secret) => {
-    try {
-        const decoded = await verifyJwt(token, secret);
-        const payload = decoded.payload;
+export const didTokenExpire = (token) => {
+    const { exp } = decodeJwt(token);
 
-        if (!payload.exp) {
-            return false;
-        }
-
-        const timeDiff = payload.exp - Date.now();
-
-        return timeDiff < 10 * 1000;
-    } catch (e) {
-        if (e instanceof errors.JWTExpired) {
-            return true;
-        }
-
-        throw e;
+    if (!exp) {
+        return false;
     }
+
+    const timeDiff = exp * 10 ** 3 - Date.now();
+    return timeDiff < 10 * 10 ** 3;
 };

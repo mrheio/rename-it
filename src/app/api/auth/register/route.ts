@@ -1,7 +1,7 @@
 import { AppError, AuthSuccess } from '@/api';
 import { registerRequestSchema, validateData } from '@/schemas';
 import { register } from '@/server';
-import { CookiesManager } from '@/utils';
+import { CookieKey } from '@/utils';
 import { NextRequest } from 'next/server';
 
 export const POST = async (request: NextRequest) => {
@@ -17,26 +17,15 @@ export const POST = async (request: NextRequest) => {
     }
 
     try {
-        const { accessToken, refreshToken, exp } = await register(parsedData);
+        const { accessToken, refreshToken } = await register(parsedData);
 
-        const success = AuthSuccess.register(accessToken, refreshToken, exp);
+        const success = AuthSuccess.register(accessToken, refreshToken);
         const response = success.toNextResponse();
 
-        response.cookies
-            .set({
-                name: CookiesManager.accessToken.name,
-                value: accessToken,
-                httpOnly: true,
-            })
-            .set({
-                name: CookiesManager.refreshToken.name,
-                value: refreshToken,
-                httpOnly: true,
-            })
-            .set({
-                name: CookiesManager.expiryTime.name,
-                value: exp.toString(),
-            });
+        const options = { httpOnly: true };
+
+        response.cookies.set(CookieKey.AccessToken, accessToken, options);
+        response.cookies.set(CookieKey.RefreshToken, refreshToken, options);
 
         return response;
     } catch (e) {

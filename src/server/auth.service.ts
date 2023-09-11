@@ -1,17 +1,17 @@
 import { AuthError, UserError } from '@/api';
 import { LoginRequestBody, RegisterRequestBody } from '@/schemas';
-import { checkIsSamePass, hashPass, verifyJwt } from '@/utils';
+import { CookieKey, checkIsSamePass, hashPass, verifyJwt } from '@/utils';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library';
 import { CONFIG } from '../../config';
 import { prisma } from './db';
 
-import { CookiesManager, signJwt } from '@/utils';
+import { signJwt } from '@/utils';
 import { errors } from 'jose';
 import { NextRequest } from 'next/server';
 
-export const generateJwts = async (payload) => {
+const generateJwts = async (payload) => {
     const accessTokenOptions = {
-        exp: `${CONFIG.JWT_EXPIRES_IN}m`,
+        exp: CONFIG.JWT_EXPIRES_IN,
         secret: CONFIG.JWT_SECRET,
     };
 
@@ -24,13 +24,11 @@ export const generateJwts = async (payload) => {
 
     const refreshToken = await signJwt({ id: payload.id }, refreshTokenOptions);
 
-    const exp = Date.now() + parseInt(CONFIG.JWT_EXPIRES_IN) * 60 * 1000;
-
-    return { accessToken, refreshToken, exp };
+    return { accessToken, refreshToken };
 };
 
 export const getServerSession = async (request: NextRequest) => {
-    const accessToken = CookiesManager.accessToken.value(request);
+    const accessToken = request.cookies.get(CookieKey.AccessToken)?.value;
 
     if (!accessToken) {
         return null;
@@ -89,7 +87,7 @@ export const login = async (data: LoginRequestBody) => {
         );
 
         if (!doPasswordsMatch) {
-            throw UserError.notFound();
+            throw AuthError.unauthorized();
         }
 
         return generateJwts({
@@ -113,7 +111,7 @@ export const refresh = async (refreshToken: string) => {
     });
 
     if (!user) {
-        throw UserError.notFound();
+        throw AuthError.unauthorized();
     }
 
     return generateJwts({
