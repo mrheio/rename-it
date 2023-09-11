@@ -18,7 +18,7 @@ const Sidebar = ({ isOpen, closeModal }) => {
 
     useEffect(() => {
         if (isLogoutSuccess) {
-            window.location.reload();
+            router.refresh();
         }
     }, [isLogoutSuccess]);
 
@@ -49,11 +49,12 @@ const Sidebar = ({ isOpen, closeModal }) => {
                             <ul className="mt-2 w-full">
                                 <li>
                                     <button
-                                        onClick={() =>
+                                        onClick={() => {
+                                            closeModal();
                                             router.push(
                                                 ROUTES.PROTECTED.PROFILE
-                                            )
-                                        }
+                                            );
+                                        }}
                                         type="button"
                                         className="flex w-full gap-2 p-4 hover:bg-surface-900 hover:text-primary"
                                     >
@@ -62,7 +63,10 @@ const Sidebar = ({ isOpen, closeModal }) => {
                                 </li>
                                 <li>
                                     <button
-                                        onClick={handleLogout}
+                                        onClick={() => {
+                                            closeModal();
+                                            handleLogout();
+                                        }}
                                         type="button"
                                         className="flex w-full items-center gap-2 p-4 hover:bg-surface-900 hover:text-primary"
                                     >

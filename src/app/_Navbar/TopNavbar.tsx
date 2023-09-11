@@ -39,29 +39,29 @@ const TopNavbar = ({ openModal }) => {
                 />
             </div>
 
-            <Loading loading={isSessionLoading} hide>
-                {!session && (
-                    <div className="basic-1/5 flex justify-end">
+            <div className="flex basis-1/5 justify-end gap-4">
+                <Loading loading={isSessionLoading} hide>
+                    {!session && (
                         <AppLink weight="bold" href={ROUTES.PUBLIC.LOGIN}>
                             Get Started
                         </AppLink>
-                    </div>
-                )}
+                    )}
 
-                {session && (
-                    <div className="flex basis-1/5 justify-end gap-4">
-                        <button
-                            type="button"
-                            className="text-xl hover:text-secondary"
-                        >
-                            <BellSimple weight="fill" />
-                        </button>
-                        <Avatar onClick={openModal}>
-                            {session.username.charAt()}
-                        </Avatar>
-                    </div>
-                )}
-            </Loading>
+                    {session && (
+                        <>
+                            <button
+                                type="button"
+                                className="text-xl hover:text-secondary"
+                            >
+                                <BellSimple weight="fill" />
+                            </button>
+                            <Avatar onClick={openModal}>
+                                {session.username.charAt()}
+                            </Avatar>
+                        </>
+                    )}
+                </Loading>
+            </div>
         </div>
     );
 };
