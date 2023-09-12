@@ -26,7 +26,7 @@ const LoginRedirect = (request: NextRequest) =>
     NextResponse.redirect(new URL(ROUTES.PUBLIC.LOGIN, request.url));
 
 export const middleware = async (request: NextRequest) => {
-    log(request);
+    // log(request);
 
     const response = NextResponse.next();
     const { pathname } = request.nextUrl;
