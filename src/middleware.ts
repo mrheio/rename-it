@@ -27,7 +27,6 @@ const LoginRedirect = (request: NextRequest) =>
 
 export const middleware = async (request: NextRequest) => {
     log(request);
-    console.log(request.cookies.toString());
 
     const response = NextResponse.next();
     const { pathname } = request.nextUrl;

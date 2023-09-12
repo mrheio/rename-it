@@ -1,3 +1,5 @@
+import { STATUS_CODES } from './api';
+
 class FetchBuilder {
     input: RequestInfo | URL;
     options?: RequestInit;
@@ -51,6 +53,13 @@ class FetchBuilder {
 
         if (response.ok) {
             return response;
+        }
+
+        if (response.status === STATUS_CODES.UNAUTHORIZED) {
+            await fetch('/api/auth/refresh', {
+                method: 'POST',
+            });
+            return this.run();
         }
 
         const error = await response.json();
