@@ -36,13 +36,9 @@ export const middleware = async (request: NextRequest) => {
         const accessToken = request.cookies.get(CookieKey.AccessToken)?.value;
         const refreshToken = request.cookies.get(CookieKey.RefreshToken)?.value;
 
-        console.log('-- Access Token: ', accessToken);
-        console.log('-- Refresh Token: ', refreshToken);
-
         if (!accessToken || !refreshToken) {
             const isProtectedRoute = PROTECTED_ROUTES_LIST.includes(pathname);
             if (isProtectedRoute) {
-                console.log('Protected Route. Access Token missing.');
                 return LoginRedirect(request);
             }
 
@@ -51,15 +47,11 @@ export const middleware = async (request: NextRequest) => {
 
         const isAccessTokenActive = !didTokenExpire(accessToken);
 
-        console.log('-- Access Token Active: ', isAccessTokenActive);
-
         if (!isAccessTokenActive) {
             const session = await myfetch(`${CONFIG.API_URL}/auth/refresh`)
                 .POST()
                 .json({ refresh_token: refreshToken })
                 .data();
-
-            console.log('---- New Session: ', session);
 
             const retry = NextResponse.redirect(new URL(request.url));
 
@@ -78,7 +70,6 @@ export const middleware = async (request: NextRequest) => {
         }
 
         if (AUTH_ROUTES_LIST.includes(pathname)) {
-            console.log('-- Session already active. Redirecting to home.');
             return HomeRedirect(request);
         }
     }
