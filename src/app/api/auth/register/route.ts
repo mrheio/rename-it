@@ -22,10 +22,16 @@ export const POST = async (request: NextRequest) => {
         const success = AuthSuccess.register(accessToken, refreshToken);
         const response = success.toNextResponse();
 
-        const options = { httpOnly: true };
-
-        response.cookies.set(CookieKey.AccessToken, accessToken, options);
-        response.cookies.set(CookieKey.RefreshToken, refreshToken, options);
+        response.cookies.set(CookieKey.AccessToken, accessToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        });
+        response.cookies.set(CookieKey.RefreshToken, refreshToken, {
+            httpOnly: true,
+            secure: true,
+            sameSite: 'none',
+        });
 
         return response;
     } catch (e) {

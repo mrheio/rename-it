@@ -64,8 +64,16 @@ export const middleware = async (request: NextRequest) => {
 
             const retry = NextResponse.redirect(new URL(request.url));
 
-            retry.cookies.set(CookieKey.AccessToken, session.access_token);
-            retry.cookies.set(CookieKey.RefreshToken, session.refresh_token);
+            retry.cookies.set(CookieKey.AccessToken, session.access_token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+            });
+            retry.cookies.set(CookieKey.RefreshToken, session.refresh_token, {
+                httpOnly: true,
+                secure: true,
+                sameSite: 'none',
+            });
 
             return retry;
         }

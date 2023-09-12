@@ -25,10 +25,16 @@ export const POST = async (request: NextRequest) => {
     const success = AuthSuccess.refresh(newAccessToken, newRefreshToken);
     const response = success.toNextResponse();
 
-    const options = { httpOnly: true };
-
-    response.cookies.set(CookieKey.AccessToken, newAccessToken, options);
-    response.cookies.set(CookieKey.RefreshToken, newRefreshToken, options);
+    response.cookies.set(CookieKey.AccessToken, newAccessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+    });
+    response.cookies.set(CookieKey.RefreshToken, newRefreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'none',
+    });
 
     return response;
 };
