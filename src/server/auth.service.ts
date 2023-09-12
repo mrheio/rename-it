@@ -6,7 +6,6 @@ import { CONFIG } from '../../config';
 import { prisma } from './db';
 
 import { signJwt } from '@/utils';
-import { errors } from 'jose';
 import { NextRequest } from 'next/server';
 
 const generateJwts = async (payload) => {
@@ -34,16 +33,8 @@ export const getServerSession = async (request: NextRequest) => {
         return null;
     }
 
-    try {
-        const decoded = await verifyJwt(accessToken, CONFIG.JWT_SECRET);
-        return decoded.payload;
-    } catch (e) {
-        if (e instanceof errors.JWTExpired) {
-            return null;
-        }
-
-        throw e;
-    }
+    const decoded = await verifyJwt(accessToken, CONFIG.JWT_SECRET);
+    return decoded.payload;
 };
 
 export const register = async (data: RegisterRequestBody) => {

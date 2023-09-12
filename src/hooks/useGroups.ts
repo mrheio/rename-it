@@ -10,11 +10,10 @@ const useGroups = () => {
         queryKey: ['groups', userId],
         queryFn: async ({ queryKey }) => {
             const uid = queryKey[1];
-
             const data = await myfetch(`/api/users/${uid}/groups`).GET().data();
-
             return data?.payload?.items ?? [];
         },
+        enabled: !!userId,
     });
 
     return query;
