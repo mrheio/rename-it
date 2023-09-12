@@ -29,11 +29,14 @@ const generateJwts = async (payload) => {
 export const getServerSession = async (request: NextRequest) => {
     const accessToken = request.cookies.get(CookieKey.AccessToken)?.value;
 
+    console.log({ accessToken });
+
     if (!accessToken) {
         return null;
     }
 
     const decoded = await verifyJwt(accessToken, CONFIG.JWT_SECRET);
+    console.log({ decoded });
     return decoded.payload;
 };
 
