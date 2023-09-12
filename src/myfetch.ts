@@ -46,12 +46,21 @@ class FetchBuilder {
         return new FetchBuilder(this.input, { ...this.options, headers });
     }
 
-    run() {
-        return fetch(this.input, this.options);
+    async run() {
+        const response = await fetch(this.input, this.options);
+
+        if (response.ok) {
+            return response;
+        }
+
+        const error = await response.json();
+        throw error;
     }
 
-    async data(as = 'json') {
-        return (await this.run()).json();
+    async data() {
+        const response = await this.run();
+        const data = await response.json();
+        return data;
     }
 }
 

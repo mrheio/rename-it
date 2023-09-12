@@ -5,14 +5,8 @@ const useSession = () => {
     const query = useQuery({
         queryKey: ['session'],
         queryFn: async () => {
-            const response = await myfetch('/api/auth/session').GET().run();
-
-            if (response.ok) {
-                const data = await response.json();
-                return data.payload;
-            }
-
-            return null;
+            const data = await myfetch('/api/auth/session').GET().data();
+            return data.payload;
         },
     });
 
